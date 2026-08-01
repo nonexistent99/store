@@ -1,0 +1,42 @@
+[
+  {
+    "id": "prd_efeb9ae7da4a",
+    "name": "Claude Code MAX 20x (30d)",
+    "description": "- Claude Code MAX 20x acesso privado (30 dias)",
+    "price": 34990,
+    "imageUrl": "https://i.imgur.com/Ch2ODUB.png",
+    "active": true,
+    "createdAt": "2026-08-01T18:27:18.152Z",
+    "updatedAt": "2026-08-01T18:35:30.961Z"
+  },
+  {
+    "id": "prd_2912295d320f",
+    "name": "Claude Code MAX 10x (30d)",
+    "description": "- Claude Code MAX 10x acesso privado (30 dias)",
+    "price": 24990,
+    "imageUrl": "https://i.imgur.com/Ch2ODUB.png",
+    "active": true,
+    "createdAt": "2026-08-01T18:26:35.279Z",
+    "updatedAt": "2026-08-01T18:35:35.527Z"
+  },
+  {
+    "id": "prd_58adefa0165d",
+    "name": "Claude Code MAX 5x (30d)",
+    "description": "- Claude Code MAX 5x acesso privado (30 dias)",
+    "price": 15990,
+    "imageUrl": "https://i.imgur.com/Ch2ODUB.png",
+    "active": true,
+    "createdAt": "2026-08-01T18:25:17.157Z",
+    "updatedAt": "2026-08-01T18:35:39.786Z"
+  },
+  {
+    "id": "prd_aa29a13861ea",
+    "name": "Claude Code Pro",
+    "description": "- Claude Code PRO acesso privado (30 dias)",
+    "price": 6990,
+    "imageUrl": "https://i.imgur.com/Ch2ODUB.png",
+    "active": true,
+    "createdAt": "2026-08-01T18:08:47.514Z",
+    "updatedAt": "2026-08-01T18:35:42.602Z"
+  }
+]

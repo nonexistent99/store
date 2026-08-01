@@ -1,0 +1,67 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --ink: #0b1012;
+  --panel: #11191b;
+  --mint: #b8f15d;
+  --mist: #e9ece6;
+  --line: rgba(233, 236, 230, 0.13);
+}
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  min-height: 100vh;
+  margin: 0;
+  background: var(--ink);
+  color: var(--mist);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+button, input, textarea { font: inherit; }
+button { cursor: pointer; }
+button:disabled { cursor: not-allowed; }
+
+::selection { background: var(--mint); color: var(--ink); }
+
+.site-grid {
+  background-image:
+    linear-gradient(rgba(233, 236, 230, .035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(233, 236, 230, .035) 1px, transparent 1px),
+    radial-gradient(circle at 92% 4%, rgba(184, 241, 93, .16), transparent 26rem),
+    radial-gradient(circle at 4% 84%, rgba(98, 147, 142, .13), transparent 28rem);
+  background-size: 44px 44px, 44px 44px, auto, auto;
+}
+
+.grain::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  pointer-events: none;
+  opacity: .18;
+  background-image: repeating-linear-gradient(90deg, rgba(255,255,255,.018) 0 1px, transparent 1px 3px);
+  mix-blend-mode: soft-light;
+}
+
+.focus-ring:focus-visible {
+  outline: 2px solid var(--mint);
+  outline-offset: 3px;
+}
+
+.reveal { animation: reveal .55s cubic-bezier(.2,.8,.2,1) both; }
+.reveal-delay { animation: reveal .55s .12s cubic-bezier(.2,.8,.2,1) both; }
+.reveal-delay-2 { animation: reveal .55s .22s cubic-bezier(.2,.8,.2,1) both; }
+
+@keyframes reveal {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; scroll-behavior: auto !important; }
+}

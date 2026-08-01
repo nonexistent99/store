@@ -1,0 +1,11 @@
+node_modules
+.next
+*.tsbuildinfo
+.env.local
+.env
+npm-debug.log*
+.netlify
+
+# Dados operacionais e segredos não devem ir para o repositório.
+data/orders.json
+data/settings.json
