@@ -15,7 +15,9 @@ const files = {
 // local JSON files for development, but use a site-wide Blobs store in a
 // deployed Netlify runtime so changes survive function restarts and deploys.
 const blobStoreName = "kngstores-data";
-const isNetlifyRuntime = Boolean(process.env.NETLIFY);
+// Netlify exposes this context inside Functions at runtime. `NETLIFY` is a
+// build-time flag and is not guaranteed to be available once a Function runs.
+const isNetlifyRuntime = Boolean(process.env.NETLIFY_BLOBS_CONTEXT);
 
 const defaultSettings: Settings = {
   store: {
