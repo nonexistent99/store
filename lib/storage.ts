@@ -1,5 +1,6 @@
 import { promises as fs } from "fs";
 import path from "path";
+import { getStore } from "@netlify/blobs";
 
 import type { Order, Product, Settings } from "@/lib/types";
 
@@ -9,6 +10,12 @@ const files = {
   orders: path.join(dataDirectory, "orders.json"),
   settings: path.join(dataDirectory, "settings.json"),
 };
+
+// Netlify Functions have an ephemeral, read-only project filesystem. Keep the
+// local JSON files for development, but use a site-wide Blobs store in a
+// deployed Netlify runtime so changes survive function restarts and deploys.
+const blobStoreName = "kngstores-data";
+const isNetlifyRuntime = Boolean(process.env.NETLIFY);
 
 const defaultSettings: Settings = {
   store: {
@@ -27,6 +34,32 @@ const defaultSettings: Settings = {
 };
 
 async function readJson<T>(file: string, fallback: T): Promise<T> {
+  if (isNetlifyRuntime) {
+    const key = path.basename(file);
+    const store = getStore(blobStoreName);
+    const stored = await store.get(key, { type: "json" });
+
+    if (stored !== null) {
+      return stored as T;
+    }
+
+    // Preserve the starter data that ships with the application on the first
+    // production read. Subsequent reads come from the persistent Blob.
+    try {
+      const content = await fs.readFile(file, "utf8");
+      const initialData = JSON.parse(content) as T;
+      await store.setJSON(key, initialData);
+      return initialData;
+    } catch (error) {
+      if ((error as NodeJS.ErrnoException).code !== "ENOENT") {
+        throw error;
+      }
+
+      await store.setJSON(key, fallback);
+      return fallback;
+    }
+  }
+
   try {
     const content = await fs.readFile(file, "utf8");
     return JSON.parse(content) as T;
@@ -41,6 +74,11 @@ async function readJson<T>(file: string, fallback: T): Promise<T> {
 }
 
 async function writeJson<T>(file: string, data: T) {
+  if (isNetlifyRuntime) {
+    await getStore(blobStoreName).setJSON(path.basename(file), data);
+    return;
+  }
+
   await fs.mkdir(dataDirectory, { recursive: true });
   const temporaryFile = `${file}.tmp`;
   await fs.writeFile(temporaryFile, `${JSON.stringify(data, null, 2)}\n`, "utf8");
